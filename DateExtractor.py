@@ -217,11 +217,8 @@ def demo():
         
         print string, ' : ', map(lambda x: x.strftime('%d-%m-%Y'), dates), ' : ' , DateFinder.get_period(*dates), 'years'
 
-if __name__ == '__main__':
-
-    # return date_finder.find_dates(text)
-
-    # create a `DateExtractor.DateFinder` object
+def usage():
+    
     df = DateFinder()
 
     # This `find_dates(text)` returns a list of datetime objects 
@@ -232,7 +229,10 @@ if __name__ == '__main__':
     
     print DateFinder.get_period(date_list[0], date_list[1], in_years=True)
     # print: 1.17
-        
+
+if __name__ == '__main__':
+
+    demo()
 
     
 
