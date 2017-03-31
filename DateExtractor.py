@@ -52,7 +52,7 @@ class DateFinder(object):
     DATE_REGEX = re.compile(DATES_PATTERN, re.IGNORECASE | re.MULTILINE | re.UNICODE | re.DOTALL | re.VERBOSE)
     STRIP_CHARS = ' \n\t:-.,_'
 
-    def __init__(self, base_date=None):
+    def __init__(self, base_date=datetime.datetime(2000, 01, 01, 0, 0)):
         self.base_date = base_date
 
     def find_dates(self, text, source=False, index=False):
@@ -182,10 +182,7 @@ class DateFinder(object):
         return round(diff.days/365.25, 2)
 
 
-if __name__ == '__main__':
-
-    # return date_finder.find_dates(text)
-
+def demo():
     test_cases = [
         'worked from 10 may 00 to present',
         '10/July',
@@ -214,29 +211,29 @@ if __name__ == '__main__':
         "<foobar> (oct 2013 to december 2014) </foobar>"
 
         ]
-
-    df = DateFinder(base_date=datetime.datetime(2000, 01, 01, 0, 0))
-    # print map(DateFinder(base_date=datetime.datetime(2000, 01, 01, 0, 0)).find_dates, test_cases)
+    df = DateFinder()
     for string in test_cases:
         dates = df.find_dates(string)
         
         print string, ' : ', map(lambda x: x.strftime('%d-%m-%Y'), dates), ' : ' , DateFinder.get_period(*dates), 'years'
 
+if __name__ == '__main__':
+
+    # return date_finder.find_dates(text)
+
+    # create a `DateExtractor.DateFinder` object
+    df = DateFinder()
+
+    # This `find_dates(text)` returns a list of datetime objects 
+    date_list = df.find_dates('<foobar> (oct 2013 to december 2014) </foobar>')
+
+    print date_list
+    # prints:  [datetime.datetime(2013, 10, 1, 0, 0), datetime.datetime(2014, 12, 1, 0, 0)]
+    
+    print DateFinder.get_period(date_list[0], date_list[1], in_years=True)
+    # print: 1.17
         
 
-    # print DateFinder.get_period(*DateFinder(base_date=datetime.datetime(2000, 01, 01, 0, 0)).find_dates(test_cases[0]))
-    # df = DateFinder(base_date=None)
-    # dates = df.find_dates("worked from 22nd october 2001 to 12th may 2003")
-    # print 'period(years): ', DateFinder.get_period(*dates)
-    # dates = df.find_dates("worked from oct 2002 to nov 2003")
-    # print 'period(years): ', DateFinder.get_period(*dates)
-    # dates = df.find_dates("oct 2002 - nov 2003")
-    # print 'period(years): ', DateFinder.get_period(*dates)
-    # dates = df.find_dates("12/12/2002 - 12/12/2003")
-    # print 'period(years): ', DateFinder.get_period(*dates)
-# print map(list,map(find_dates, dates))
-
-
-
+    
 
 
