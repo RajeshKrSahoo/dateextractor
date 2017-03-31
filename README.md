@@ -15,6 +15,8 @@ Basic Example is given in the `DateFinder.py` file itself!
     print DateFinder.get_period(date_list[0], date_list[1], in_years=True)
 
 
+## SOME TESTCASES
+
 ```
 from DateExtractor import demo
 demo()
