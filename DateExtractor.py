@@ -183,6 +183,7 @@ class DateFinder(object):
 
 
 def demo():
+        
     test_cases = [
         'worked from 10 may 00 to present',
         '10/July',
@@ -212,10 +213,19 @@ def demo():
 
         ]
     df = DateFinder()
-    for string in test_cases:
-        dates = df.find_dates(string)
+    try:
+        from tabulate import tabulate
+        print tabulate([[string, map(lambda x: x.strftime('%d-%m-%Y'), dates), DateFinder.get_period(*dates)] for string, dates in zip(test_cases, map(df.find_dates, test_cases))],
+                    headers=['TEXT', 'DATE', 'DURATION(year)'], tablefmt='orgtbl')
+    except ImportError:
+        for string in test_cases:
+            dates = df.find_dates(string)
+            print string, ' : ', map(lambda x: x.strftime('%d-%m-%Y'), dates), ' : ' , DateFinder.get_period(*dates), 'years'
         
-        print string, ' : ', map(lambda x: x.strftime('%d-%m-%Y'), dates), ' : ' , DateFinder.get_period(*dates), 'years'
+            
+        
+            
+
 
 def usage():
     
